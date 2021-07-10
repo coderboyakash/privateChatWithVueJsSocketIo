@@ -6,7 +6,7 @@
 </template>
 <script>
     import Navbar from './Navbar.vue'
-    import store from './../store'
+    import { mapGetters } from 'vuex'
     export default {
         data(){
             return{
@@ -16,8 +16,13 @@
         components:{
             Navbar
         },
+        computed:{
+            ...mapGetters([
+                'getUserData',
+            ])
+        },
         mounted(){
-            this.name = store.getters.getUserdata.name
+            this.name = this.$store.getters.getUserName
         }
     }
 </script>

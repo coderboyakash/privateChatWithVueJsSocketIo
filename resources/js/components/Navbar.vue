@@ -25,28 +25,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import { GET_USER } from './../apis'
-  import store from './../store'
-  import router from './../router'
   export default {
-    props: ['name'],
-    setup(){
-      let token = localStorage.getItem('token')
-      let headers = {
-        'Authorization' : token,
-        'Accept' : 'application/json'
-      }
-      axios.get(GET_USER, {headers})
-      .then(({data}) => {
-          localStorage.setItem('token', 'Bearer ' + data.token)
-          store.commit('setLoggedIn', data.success)
-          store.commit('setToken', 'Bearer ' + data.token)
-          store.commit('setUserData', data.result)
-          if(store.getters.getLoggedIn){
-            router.push({name:'Dashboard'})
-          }
-      })
-    }
+    props: ['name']
   }
 </script>

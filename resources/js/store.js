@@ -20,10 +20,13 @@ const store = createStore({
     },
     getters:{
         getLoggedIn(state){
-            return state.loggedIn
+          return state.loggedIn
         },
-        getUserdata(state){
-            return state.userdata
+        getUserData(state){
+          return state.userdata
+        },
+        getUserName(state){
+          return state.userdata.name
         }
     }
 })
