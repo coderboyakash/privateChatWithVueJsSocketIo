@@ -15,7 +15,7 @@
                             <sapn class="online">Online</sapn>
                         </div>
                     </div>
-                    <ChatRoom :user="user" :socket="socket"/>
+                    <ChatRoom :currentUser="currentUser" :socket="socket"/>
                 </div>
             </div>
         </div>

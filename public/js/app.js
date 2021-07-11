@@ -18154,7 +18154,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__.io.connect("http://localhost:3000");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['user'],
+  props: ['currentUser'],
   data: function data() {
     return {
       message: null,
@@ -18163,12 +18163,26 @@ var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__.io.connect("http://lo
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.userData = _store__WEBPACK_IMPORTED_MODULE_0__.default.getters.getUserData;
-    socket.emit('addUser', socket.id, this.userData.id);
+    socket.on('connect', function () {
+      socket.emit('addUser', socket.id, _this.userData.id);
+    });
     _store__WEBPACK_IMPORTED_MODULE_0__.default.commit('setSocketId', socket.id);
+    console.log(socket.id);
+    console.log(this.currentUser);
+    socket.on('getMessage', function (sender_id, text) {
+      console.log(text, sender_id);
+    });
   },
   methods: {
-    handleSendMessage: function handleSendMessage() {},
+    handleSendMessage: function handleSendMessage() {
+      var senderId = this.userData.id;
+      var message = this.message;
+      socket.emit('sendMessage', senderId, this.currentUser.id, message);
+      this.message = null; // socket.to(socketId).emit('Hello World!');
+    },
     handleInputKeyUp: function handleInputKeyUp(e) {
       if (e.keyCode == 13) {
         this.handleSendMessage();
@@ -18441,17 +18455,20 @@ var _hoisted_4 = {
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "text",
-    onKeyup: _cache[1] || (_cache[1] = function () {
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.message = $event;
+    }),
+    onKeyup: _cache[2] || (_cache[2] = function () {
       return $options.handleInputKeyUp && $options.handleInputKeyUp.apply($options, arguments);
     }),
     "class": "form-control"
-  }, null, 32
-  /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  }, null, 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.message]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "submit",
-    onClick: _cache[2] || (_cache[2] = function () {
+    onClick: _cache[3] || (_cache[3] = function () {
       return $options.handleSendMessage && $options.handleSendMessage.apply($options, arguments);
     }),
     value: "Submit",
@@ -18542,11 +18559,11 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     /* STABLE */
 
   })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ChatRoom, {
-    user: $data.user,
+    currentUser: $data.currentUser,
     socket: _ctx.socket
   }, null, 8
   /* PROPS */
-  , ["user", "socket"])])])])]);
+  , ["currentUser", "socket"])])])])]);
 });
 
 /***/ }),
