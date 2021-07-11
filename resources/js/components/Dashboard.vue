@@ -15,7 +15,7 @@
                             <sapn class="online">Online</sapn>
                         </div>
                     </div>
-                    <ChatRoom/>
+                    <ChatRoom :user="user" :socket="socket"/>
                 </div>
             </div>
         </div>
@@ -27,6 +27,8 @@
     import { mapGetters } from 'vuex'
     import { GET_ALL_USERS, GET_USER_DATA } from './../apis'
     import axios from 'axios'
+    import { io } from 'socket.io-client'
+    const socket = io.connect("http://localhost:3000");
     export default {
         data(){
             return{

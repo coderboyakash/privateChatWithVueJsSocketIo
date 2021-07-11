@@ -4,7 +4,8 @@ const store = createStore({
       return {
         token: null,
         loggedIn: false,
-        userdata: null
+        userdata: null,
+        socket_id: null
       }
     },
     mutations: {
@@ -16,6 +17,9 @@ const store = createStore({
       },
       setUserData(state, payload){
         state.userdata = payload;
+      },
+      setSocketId(state, payload){
+        state.socket_id = payload;
       }
     },
     getters:{
@@ -25,11 +29,11 @@ const store = createStore({
         getUserData(state){
           return state.userdata
         },
-        getUserName(state){
-          return state.userdata.name
-        },
         getToken(state){
           return state.token
+        },
+        getSocketId(state){
+          return state.socket_id
         }
     }
 })

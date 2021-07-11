@@ -1,5 +1,5 @@
-<template>10 p-0">
-    <div class="row chat-room">10 p-0">
+<template>
+    <div class="row chat-room">
 
     </div>
     <div class="row">
@@ -13,11 +13,22 @@
 </template>
 
 <script>
+    import store from './../store'
+    import {io} from 'socket.io-client'
+    const socket = io.connect("http://localhost:3000");
     export default {
+        props: ['user'],
         data(){
             return {
-                message:null
+                message:null,
+                userData:null,
+                socket_id:null
             }
+        },
+        mounted(){
+            this.userData = store.getters.getUserData
+            socket.emit('addUser', socket.id, this.userData.id)
+            store.commit('setSocketId',socket.id)
         },
         methods:{
             handleSendMessage(){

@@ -1,4 +1,4 @@
-import { createApp, onMounted } from 'vue'
+import { createApp } from 'vue'
 import router from './router'
 import store from './store'
 
