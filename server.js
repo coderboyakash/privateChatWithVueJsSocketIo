@@ -41,6 +41,7 @@ const removeUser = (socket_id) => {
 
 io.on('connection', (socket) => {
     console.log('connected')
+    console.log(users)
 
     socket.on('addUser',(socket_id, user_id) => {
         addUser(socket_id, user_id)
@@ -63,6 +64,8 @@ io.on('connection', (socket) => {
         console.log('disconnected')
         console.log(socket.id)
         removeUser(socket.id)
+        console.log(users)
+
     })
 })
 

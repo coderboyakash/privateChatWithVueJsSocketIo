@@ -28,11 +28,16 @@
         mounted(){
             this.userData = store.getters.getUserData
             socket.on('connect', () => {
+                console.log('from connect', socket.id)
                 socket.emit('addUser', socket.id, this.userData.id)
             })
+            socket.on("reconnect", () => {
+                console.log('reconnect')
+            })
+            socket.emit('addUser', socket.id, this.userData.id)
             store.commit('setSocketId',socket.id)
             console.log(socket.id)
-            console.log(this.currentUser)
+            // console.log(this.currentUser)
             socket.on('getMessage', (sender_id, text ) => {
                 console.log(text, sender_id)
             })

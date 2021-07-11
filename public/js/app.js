@@ -18167,11 +18167,16 @@ var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__.io.connect("http://lo
 
     this.userData = _store__WEBPACK_IMPORTED_MODULE_0__.default.getters.getUserData;
     socket.on('connect', function () {
+      console.log('from connect', socket.id);
       socket.emit('addUser', socket.id, _this.userData.id);
     });
+    socket.on("reconnect", function () {
+      console.log('reconnect');
+    });
+    socket.emit('addUser', socket.id, this.userData.id);
     _store__WEBPACK_IMPORTED_MODULE_0__.default.commit('setSocketId', socket.id);
-    console.log(socket.id);
-    console.log(this.currentUser);
+    console.log(socket.id); // console.log(this.currentUser)
+
     socket.on('getMessage', function (sender_id, text) {
       console.log(text, sender_id);
     });
