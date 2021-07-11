@@ -15,6 +15,7 @@
                             <sapn class="online">Online</sapn>
                         </div>
                     </div>
+                    <ChatRoom/>
                 </div>
             </div>
         </div>
@@ -22,6 +23,7 @@
 </template>
 <script>
     import Navbar from './Navbar.vue'
+    import ChatRoom from './ChatRoom.vue'
     import { mapGetters } from 'vuex'
     import { GET_ALL_USERS, GET_USER_DATA } from './../apis'
     import axios from 'axios'
@@ -34,7 +36,7 @@
             }
         },
         components:{
-            Navbar
+            Navbar,ChatRoom
         },
         computed:{
             ...mapGetters([
@@ -100,7 +102,11 @@
         justify-content: space-evenly;
         color:powderblue;
     }
+    .user-details h2{
+        line-height: 3.2;
+    }
     .online{
         color:white;
+        line-height: 6.2;
     }
 </style>
