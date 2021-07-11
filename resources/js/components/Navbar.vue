@@ -6,7 +6,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0" v-if="loggedIn">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" v-if="!loggedIn">
         <li class="nav-item">
             <router-link class="nav-link" to="/login">Login</router-link>
         </li>
@@ -16,7 +16,10 @@
       </ul>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0" v-else>
         <li class="nav-item">
-            <router-link class="nav-link" to="/dashboard">Welcome {{name}}</router-link>
+            <router-link class="nav-link" to="/dashboard">Welcome {{user.name}}</router-link>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:void(0);" @click="handleLogout" class="nav-link">Logout</a>
         </li>
       </ul>
     </div>
@@ -25,7 +28,26 @@
 </template>
 
 <script>
+  import store from './../store'
+  import router from './../router'
   export default {
-    props: ['name']
+    data(){
+      return{
+        loggedIn:false
+      }
+    },
+    props: ['user'],
+    mounted(){
+      this.loggedIn = store.getters.getLoggedIn
+    },
+    methods:{
+      handleLogout(){
+        store.commit('setLoggedIn', false)
+        store.commit('setUserData', null)
+        store.commit('setToken', null)
+        localStorage.removeItem('token')
+        router.push('/login')
+      }
+    }
   }
 </script>

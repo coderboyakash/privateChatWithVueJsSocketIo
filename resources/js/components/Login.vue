@@ -54,6 +54,7 @@
                 .then(({data}) => {
                     localStorage.setItem('token', 'Bearer ' + data.token)
                     this.$store.commit('setLoggedIn', data.success)
+                    this.$store.commit('setUserData', data.result)
                     this.$store.commit('setToken', data.token)
                     router.push({ name : 'Dashboard' })
                 })

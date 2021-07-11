@@ -27,6 +27,9 @@ const store = createStore({
         },
         getUserName(state){
           return state.userdata.name
+        },
+        getToken(state){
+          return state.token
         }
     }
 })
