@@ -1,6 +1,13 @@
 <template>
     <div class="row chat-room">
-
+        <div 
+            class='message' 
+            :class="chat.me" 
+            v-for="chat in chats"
+            :key="chat.id"
+        >
+            {{ chat.message }}
+        </div>
     </div>
     <div class="row">
         <div class="col-10 p-0">
@@ -22,7 +29,15 @@
             return {
                 message:null,
                 userData:null,
-                socket_id:null
+                socket_id:null,
+                chats:
+                [
+                    {
+                        id:1,
+                        me:'me',
+                        message:'Hello World!!'
+                    }
+                ]
             }
         },
         mounted(){
@@ -39,7 +54,7 @@
             console.log(socket.id)
             // console.log(this.currentUser)
             socket.on('getMessage', (sender_id, text ) => {
-                console.log(text, sender_id)
+                
             })
         },
         methods:{
@@ -47,8 +62,12 @@
                 let senderId = this.userData.id
                 let message = this.message
                 socket.emit('sendMessage',senderId, this.currentUser.id, message)
+                this.chats.push({
+                    id:2,
+                    me:'me',
+                    message:this.message
+                })
                 this.message = null
-                // socket.to(socketId).emit('Hello World!');
             },
             handleInputKeyUp(e){
                 if(e.keyCode == 13){
@@ -62,6 +81,11 @@
     .chat-room{
         height:500px;
         background-color: powderblue;
+        margin:20px;
+        display:flex;
+        flex-direction: row;
+        overflow-y:scroll;
+        justify-content: center;
     }
     .submit-btn{
         width:90%;
@@ -71,5 +95,16 @@
     }
     .btn{
         padding: 1rem .75rem;
+    }
+    .message{
+        color:black;
+        height: 50px;
+        margin:5px 10px;
+        width:80%;
+        padding:10px;
+        background-color: paleturquoise;
+    }
+    .me{
+        background-color: palegoldenrod !important;
     }
 </style>

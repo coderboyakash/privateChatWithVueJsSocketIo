@@ -18159,7 +18159,12 @@ var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__.io.connect("http://lo
     return {
       message: null,
       userData: null,
-      socket_id: null
+      socket_id: null,
+      chats: [{
+        id: 1,
+        me: 'me',
+        message: 'Hello World!!'
+      }]
     };
   },
   mounted: function mounted() {
@@ -18177,16 +18182,19 @@ var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__.io.connect("http://lo
     _store__WEBPACK_IMPORTED_MODULE_0__.default.commit('setSocketId', socket.id);
     console.log(socket.id); // console.log(this.currentUser)
 
-    socket.on('getMessage', function (sender_id, text) {
-      console.log(text, sender_id);
-    });
+    socket.on('getMessage', function (sender_id, text) {});
   },
   methods: {
     handleSendMessage: function handleSendMessage() {
       var senderId = this.userData.id;
       var message = this.message;
       socket.emit('sendMessage', senderId, this.currentUser.id, message);
-      this.message = null; // socket.to(socketId).emit('Hello World!');
+      this.chats.push({
+        id: 2,
+        me: 'me',
+        message: this.message
+      });
+      this.message = null;
     },
     handleInputKeyUp: function handleInputKeyUp(e) {
       if (e.keyCode == 13) {
@@ -18441,12 +18449,9 @@ var _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("dat
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-4926d03e");
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_1 = {
   "class": "row chat-room"
-}, null, -1
-/* HOISTED */
-);
-
+};
 var _hoisted_2 = {
   "class": "row"
 };
@@ -18460,7 +18465,16 @@ var _hoisted_4 = {
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.chats, function (chat) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+      "class": ["message", chat.me],
+      key: chat.id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(chat.message), 3
+    /* TEXT, CLASS */
+    );
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "text",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.message = $event;
@@ -21359,7 +21373,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.chat-room[data-v-4926d03e]{\n        height:500px;\n        background-color: powderblue;\n}\n.submit-btn[data-v-4926d03e]{\n        width:90%;\n}\n.form-control[data-v-4926d03e]{\n        padding: 1rem .75rem;\n}\n.btn[data-v-4926d03e]{\n        padding: 1rem .75rem;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.chat-room[data-v-4926d03e]{\n        height:500px;\n        background-color: powderblue;\n        margin:20px;\n        display:flex;\n        flex-direction: row;\n        overflow-y:scroll;\n        justify-content: center;\n}\n.submit-btn[data-v-4926d03e]{\n        width:90%;\n}\n.form-control[data-v-4926d03e]{\n        padding: 1rem .75rem;\n}\n.btn[data-v-4926d03e]{\n        padding: 1rem .75rem;\n}\n.message[data-v-4926d03e]{\n        color:black;\n        height: 50px;\n        margin:5px 10px;\n        width:80%;\n        padding:10px;\n        background-color: paleturquoise;\n}\n.me[data-v-4926d03e]{\n        background-color: palegoldenrod !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
