@@ -36,7 +36,7 @@ const getUser = (user_id) => {
 }
 const removeUser = (socket_id) => {
     index = users.findIndex((obj => obj.socket_id == socket_id))
-    delete users[index];
+    users.splice(index)[0];
 }
 
 io.on('connection', (socket) => {
@@ -49,6 +49,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sendMessage', (sender_id, receiver_id, text) => {
+        console.log(text)
         const receiver = getUser(receiver_id)
         if(receiver.return){
             io.to(receiver.socket_id).emit('getMessage', {
@@ -60,11 +61,13 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('disconnect', (socket) => {
-        console.log('disconnected')
-        console.log(socket.id)
-        removeUser(socket.id)
+    socket.on('userLeaved', (id) => {
+        removeUser(id)
         console.log(users)
+    })
+    socket.on('disconnect', (socket) => {
+        console.log('disconnected',socket.id)
+        // console.log(socket.id)
 
     })
 })

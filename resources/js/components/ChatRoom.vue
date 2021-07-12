@@ -30,14 +30,7 @@
                 message:null,
                 userData:null,
                 socket_id:null,
-                chats:
-                [
-                    {
-                        id:1,
-                        me:'me',
-                        message:'Hello World!!'
-                    }
-                ]
+                chats:[]
             }
         },
         mounted(){
@@ -46,15 +39,10 @@
                 console.log('from connect', socket.id)
                 socket.emit('addUser', socket.id, this.userData.id)
             })
-            socket.on("reconnect", () => {
-                console.log('reconnect')
-            })
             socket.emit('addUser', socket.id, this.userData.id)
             store.commit('setSocketId',socket.id)
-            console.log(socket.id)
-            // console.log(this.currentUser)
-            socket.on('getMessage', (sender_id, text ) => {
-                
+            socket.on('getMessage', ({sender_id, text}) => {
+                console.log(sender_id, text)
             })
         },
         methods:{

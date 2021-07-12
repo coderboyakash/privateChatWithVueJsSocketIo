@@ -18160,11 +18160,7 @@ var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__.io.connect("http://lo
       message: null,
       userData: null,
       socket_id: null,
-      chats: [{
-        id: 1,
-        me: 'me',
-        message: 'Hello World!!'
-      }]
+      chats: []
     };
   },
   mounted: function mounted() {
@@ -18175,14 +18171,13 @@ var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__.io.connect("http://lo
       console.log('from connect', socket.id);
       socket.emit('addUser', socket.id, _this.userData.id);
     });
-    socket.on("reconnect", function () {
-      console.log('reconnect');
-    });
     socket.emit('addUser', socket.id, this.userData.id);
     _store__WEBPACK_IMPORTED_MODULE_0__.default.commit('setSocketId', socket.id);
-    console.log(socket.id); // console.log(this.currentUser)
-
-    socket.on('getMessage', function (sender_id, text) {});
+    socket.on('getMessage', function (_ref) {
+      var sender_id = _ref.sender_id,
+          text = _ref.text;
+      console.log(sender_id, text);
+    });
   },
   methods: {
     handleSendMessage: function handleSendMessage() {
